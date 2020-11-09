@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to the <%= title %></p>
+    <div class="data">
+      <table>
+        <thead>
+          <tr>
+            <th><p>No.</p></th>
+            <th><p>First Name</p></th>
+            <th><p>Last Name</p></th>
+            <th><p>Email</p></th>
+            <th><p>Spoken Languages</p></th>
+            <th><p>Location</p></th>
+          </tr>
+        </thead>
+        <% response.data.forEach((user, index) => { %>
+          <tr>
+            <td><p><%= (index + 1) + response.startIndex %></p></td>
+            <td><p><%= user.firstName %></p></td>
+            <td><p><%= user.lastName %></p></td>
+            <td><a href="mailto:<%= user.email %>"><%= user.email %></a></td>
+            <td>
+              <ul>
+                <% user.spokenLanguages.forEach(language => { %>
+                  <li><%= language  %></li>
+                  <% }); %>
+                </ul>
+              </td>
+              
+              <td><p><%= user.location %></p></td>
+            </tr>
+            <% }); %>
+          </table>
+    </div>
+    <div class="pagintation">
+      <% if(response.previous) { %> 
+      <button class="previous"><a href="?page=<%= response.previous.page %>">Previous</a></button>
+      <% } else { %>
+        <button disabled aria-disabled="true" class="previous"><a href="">Previous</a></button>
+      <% }%>
+      <p class="page"><%= response.currentPage %>/<%= response.count / response.limit %></p>
+      <% if(response.next) { %> 
+        <button class="next"><a href="?page=<%= response.next.page %>">Next</a></button>
+        <% } else { %>
+        <button disabled aria-disabled="true" class="next"><a href="">Next</a></button>
+      <% } %> 
+    </div>
+  </body>
+</html>
